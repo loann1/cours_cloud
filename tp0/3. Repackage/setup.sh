@@ -9,6 +9,10 @@ sudo apt update -y
 # Installation d'un paquet
 sudo apt install -y vim
 
+# Installation Python (pour ansible)
+
+sudo apt install python3.9
+
 # Installation d'un paquet Ansible
 sudo apt install -y ansible 
 
