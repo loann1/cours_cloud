@@ -1,0 +1,67 @@
+# Cloud-config Ansible + Docker 
+
+package_update: true
+packages:
+ - git
+ - python3.9
+ - ansible
+
+# Utilisateur Ansible
+users:
+ - name: ansible-admin
+   sudo: ALL=(ALL) NOPASSWD:ALL
+   groups: adm,sys
+   home: /home/ansible-admin
+   shell: /bin/bash
+   ssh-authorized-keys:
+    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC35xnuCeDhQvh47jquJ4CTUg0NxG4tOsSzM+tGCSwIMJPBwz0Jw5PbdINGiDef+eFLD41B1dqcQi/OwYCDJJUlENxNKBj3EMlA2RL1UCWibEJaVoDUD2NrYiwwtKcPscuthImZwD2kAm+W7ITCaSbeyS5A4w/pVFyDAlLJsJtiLVWSvX+fKUWOYZgQgPhYgfYuTRebEU77Khd01mRFu76PhHiV/cfCecIO7O2R0431RIhtaDzWOuYwQKd/ORbWYbHmav9wqOvBs4IwBJYusRPJKoQ0+Gdq6XF9p1uB2Yf36Zh/xfyDxl7I8Qb2kQGseTP2J/Dd6OOBIN7b2Uq8uS5/okb5Qm9iqTKvWFVlSI83W9yQH25x4pkHqu3hxygfg45low/t3EvX6dRTodnnehAukFL8pQBsTeRoh4oxWIVxKWkpnGhRNdBiAfVvhYkCjsHlRiw8XyT/91MnnUSrzEmL4kixlBE++rBJyBnt9SK2oF9UDaSWrkqTzqLKzMOYrhJvbOGGYN7DQdo/Q8WQvYjWT2UYQJcYmOE0ow8Vomrw+EP66DGnO0ZjcNmGKz0VbQRiVWcUW+Or38mW8ye7nmuyF2wjP48pZ7JTDJNqitM3aVcbz3ZzqwcodiiU95pDVRhA7t69YqeIt6OchlqDz5qBLuyiR4zaWYHXfSGmeSIMgw== it4@nowhere.it4
+
+# Utilisateur Docker
+ - name: docker-admin
+   sudo: ALL=(ALL) NOPASSWD:ALL
+   groups: adm,sys,docker
+   home: /home/docker-admin
+   shell: /bin/bash
+   ssh-authorized-keys:
+    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC35xnuCeDhQvh47jquJ4CTUg0NxG4tOsSzM+tGCSwIMJPBwz0Jw5PbdINGiDef+eFLD41B1dqcQi/OwYCDJJUlENxNKBj3EMlA2RL1UCWibEJaVoDUD2NrYiwwtKcPscuthImZwD2kAm+W7ITCaSbeyS5A4w/pVFyDAlLJsJtiLVWSvX+fKUWOYZgQgPhYgfYuTRebEU77Khd01mRFu76PhHiV/cfCecIO7O2R0431RIhtaDzWOuYwQKd/ORbWYbHmav9wqOvBs4IwBJYusRPJKoQ0+Gdq6XF9p1uB2Yf36Zh/xfyDxl7I8Qb2kQGseTP2J/Dd6OOBIN7b2Uq8uS5/okb5Qm9iqTKvWFVlSI83W9yQH25x4pkHqu3hxygfg45low/t3EvX6dRTodnnehAukFL8pQBsTeRoh4oxWIVxKWkpnGhRNdBiAfVvhYkCjsHlRiw8XyT/91MnnUSrzEmL4kixlBE++rBJyBnt9SK2oF9UDaSWrkqTzqLKzMOYrhJvbOGGYN7DQdo/Q8WQvYjWT2UYQJcYmOE0ow8Vomrw+EP66DGnO0ZjcNmGKz0VbQRiVWcUW+Or38mW8ye7nmuyF2wjP48pZ7JTDJNqitM3aVcbz3ZzqwcodiiU95pDVRhA7t69YqeIt6OchlqDz5qBLuyiR4zaWYHXfSGmeSIMgw== it4@nowhere.it4
+
+# Configuration NTP 
+write_files:
+  - owner: root:root
+    path: /etc/systemd/timesyncd.conf
+    content: |
+          [Time]
+          NTP=
+          FallbackNTP=0.ntp.obspm.fr
+        }
+      }
+
+runcmd:
+  - sudo apt update
+#Acitivation connexion ssh sans mdp 
+  - sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication no/' /etc/ssh/sshd_config
+#Installation Docker 
+  - sudo apt-get install \ 
+  ca-certificates \
+  curl \
+  gnupg \
+  lsb-release
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+  - echo \
+   "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  - sudo apt-get update
+  - sudo apt-get install docker-ce docker-ce-cli containerd.io
+#Lancement de docker.service au démarrage
+  - systemctl enable docker.service
+
+
+
+apt install systemd-timesyncd
+timedatectl set-timezone Europe/Paris
+nano /etc/systemd/timesyncd.conf
+[Time]
+NTP=
+FallbackNTP=0.ntp.obspm.fr
+timedatectl set-ntp true
+
