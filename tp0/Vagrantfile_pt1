@@ -1,0 +1,12 @@
+Vagrant.configure("2")do|config|
+  config.vm.box="generic/ubuntu2004"
+
+  # Désactive les updates auto qui peuvent ralentir le lancement de la machine
+  config.vm.box_check_update = false 
+
+  # La ligne suivante permet de désactiver le montage d'un dossier partagé
+  # Ca ne marche pas tout le temps directement suivant vos OS, versions d'OS, etc.
+  # Pas de temps à perdre avec ça :)
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+end
