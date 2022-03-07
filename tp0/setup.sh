@@ -9,9 +9,6 @@ sudo apt update -y
 # Installation d'un paquet
 sudo apt install -y vim
 
-# Installation d'un paquet Ansible
-sudo apt install -y ansible 
-
 # On active la connexion au serveur SSH avec un mot de passe
 # Ui c'est nul, mais on en a besoin ensuite
 sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
