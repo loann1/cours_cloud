@@ -1,0 +1,17 @@
+#cloud-config
+
+package_update: true
+packages:
+ - git
+
+users:
+ - name: it4
+   sudo: ALL=(ALL) NOPASSWD:ALL
+   groups: adm,sys
+   home: /home/it4
+   shell: /bin/bash
+   ssh-authorized-keys:
+    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC35xnuCeDhQvh47jquJ4CTUg0NxG4tOsSzM+tGCSwIMJPBwz0Jw5PbdINGiDef+eFLD41B1dqcQi/OwYCDJJUlENxNKBj3EMlA2RL1UCWibEJaVoDUD2NrYiwwtKcPscuthImZwD2kAm+W7ITCaSbeyS5A4w/pVFyDAlLJsJtiLVWSvX+fKUWOYZgQgPhYgfYuTRebEU77Khd01mRFu76PhHiV/cfCecIO7O2R0431RIhtaDzWOuYwQKd/ORbWYbHmav9wqOvBs4IwBJYusRPJKoQ0+Gdq6XF9p1uB2Yf36Zh/xfyDxl7I8Qb2kQGseTP2J/Dd6OOBIN7b2Uq8uS5/okb5Qm9iqTKvWFVlSI83W9yQH25x4pkHqu3hxygfg45low/t3EvX6dRTodnnehAukFL8pQBsTeRoh4oxWIVxKWkpnGhRNdBiAfVvhYkCjsHlRiw8XyT/91MnnUSrzEmL4kixlBE++rBJyBnt9SK2oF9UDaSWrkqTzqLKzMOYrhJvbOGGYN7DQdo/Q8WQvYjWT2UYQJcYmOE0ow8Vomrw+EP66DGnO0ZjcNmGKz0VbQRiVWcUW+Or38mW8ye7nmuyF2wjP48pZ7JTDJNqitM3aVcbz3ZzqwcodiiU95pDVRhA7t69YqeIt6OchlqDz5qBLuyiR4zaWYHXfSGmeSIMgw== it4@nowhere.it4
+
+runcmd:
+  - git --version > /tmp/b3_git_version
