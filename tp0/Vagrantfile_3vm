@@ -1,0 +1,33 @@
+Vagrant.configure("2") do |config|
+  
+    # Configuration commune à toutes les machines
+    config.vm.box = "ubuntu-ynov"
+    
+  
+    # Ajoutez cette ligne afin d'accélérer le démarrage de la VM (si une erreur 'vbguest' est levée, voir la note un peu plus bas)
+    config.vbguest.auto_update = false
+    # Désactive les updates auto qui peuvent ralentir le lancement de la machine
+    config.vm.box_check_update = false 
+    # La ligne suivante permet de désactiver le montage d'un dossier partagé (ne marche pas tout le temps directement suivant vos OS, versions d'OS, etc.)
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+  
+    config.vm.provider "virtualbox" do |vb|
+      vb.gui = true
+    end
+
+    # Config une première VM "admin"
+    config.vm.define "admin.tp0.ynov" do |node1|
+      node1.vm.network "private_network"
+    end
+
+    # Config une seconde VM "node1"
+    config.vm.define "node1.tp0.ynov" do |node1|
+      node1.vm.network "private_network", ip: "192.168.0.10"
+    end
+  
+    # Config une troisième VM "node2"
+    config.vm.define "node2.tp0.ynov" do |node2|
+      node2.vm.network "private_network", ip: "192.168.0.11"
+    end
+  end
+  
