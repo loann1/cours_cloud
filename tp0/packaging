@@ -1,0 +1,5 @@
+$ vagrant package --output ubuntu-ynov.box
+
+# On ajoute le fichier .box à la liste des box que gère Vagrant
+
+$ vagrant box add ubuntu-ynov ubuntu-ynov.box
