@@ -1,0 +1,21 @@
+---
+- name: ports firewall
+  hosts: ynov
+  become: true
+
+  tasks:
+  - name: port 80
+    firewalld:
+      port: 80
+      permanent: yes
+      state: enabled
+  - name: port 22
+    firewalld:
+      port: 22/ssh
+      permanent: yes
+      state: enabled
+  - name: port 8000
+    firewalld:
+      port: 8000
+      permanent: yes
+      state: disabled
