@@ -1,0 +1,4 @@
+Vagrant.configure("2")do|config|
+  # Notre box custom
+  config.vm.box="ubuntu-ynov"
+end
