@@ -1,0 +1,21 @@
+---
+- name: Install nginx
+  hosts: ynov
+  become: true
+
+  tasks:
+  - name: Install nginx
+    apt:
+      name: nginx
+      state: present
+
+  - name: Insert Index Page
+    template:
+      src: index.html.j2
+      dest: /var/www/b3_tp1/index.html
+
+  - name: Start NGiNX
+    service:
+      name: nginx
+      state: started
+      port: 8080

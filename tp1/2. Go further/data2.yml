@@ -5,6 +5,7 @@ packages:
  - git
  - python3.9
  - ansible
+ - systemd-timesyncd
 
 # Groupe Docker
 groups:
@@ -43,7 +44,6 @@ runcmd:
 #Acitivation connexion ssh sans mdp 
   - sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication no/' /etc/ssh/sshd_config
 #NTP 
-  - sudo apt install systemd-timesyncd
   - sudo timedatectl set-timezone Europe/Paris
   - sudo timedatectl set-ntp true
 #Installation Docker 
@@ -56,6 +56,7 @@ runcmd:
   - echo \
    "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
   - sudo apt-get update
   - sudo apt-get install docker-ce docker-ce-cli containerd.io
 #Lancement de docker.service au démarrage
