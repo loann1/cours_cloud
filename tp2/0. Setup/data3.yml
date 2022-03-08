@@ -1,0 +1,16 @@
+# Cloud-config managed nodes
+
+# Utilisateur 
+users:
+ - name: user1
+   sudo: ALL=(ALL) 
+   groups: adm,sys
+   home: /home/user1
+   shell: /bin/bash
+   ssh-authorized-keys:
+    - ssh-rsa
+
+
+runcmd:
+#Acitivation connexion ssh sans mdp 
+  - sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication no/' /etc/ssh/sshd_config
