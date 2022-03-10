@@ -1,0 +1,12 @@
+# Installation vim 
+
+---
+- name: Install vim
+  hosts: ynov
+  become: true
+
+  tasks:
+  - name: Add vim
+    apt:
+      name: vim
+      state: present
