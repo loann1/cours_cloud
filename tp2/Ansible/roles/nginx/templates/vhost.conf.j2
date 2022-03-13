@@ -1,0 +1,9 @@
+server {
+        listen {{ 80 }} ;
+        server_name {{ node1.tp2.ynov }};
+
+        location / {
+            root {{ nginx_webroot }};
+            index index.html;
+        }
+}
