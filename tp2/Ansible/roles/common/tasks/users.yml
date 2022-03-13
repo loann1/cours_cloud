@@ -1,0 +1,19 @@
+users:
+ - name: user1
+   sudo: ALL=(ALL) 
+   groups: adm,sys
+   home: /home/user1
+   shell: /bin/bash
+   ssh-authorized-keys:
+ - name: user2
+   sudo: ALL=(ALL) 
+   groups: adm,sys
+   home: /home/user2
+   shell: /bin/bash
+   ssh-authorized-keys:
+ - name: user3
+   sudo: ALL=(ALL) 
+   groups: adm,sys
+   home: /home/user3
+   shell: /bin/bash
+   ssh-authorized-keys:
