@@ -1,0 +1,6 @@
+
+- name: Suppression NGINX Virtual Host
+  file:
+    state: absent
+    path: /etc/nginx/conf.d/{{ nginx_servername }}.conf
+    
