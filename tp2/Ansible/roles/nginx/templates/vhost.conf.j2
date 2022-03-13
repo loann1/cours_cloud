@@ -3,7 +3,7 @@ server {
         server_name {{ node1.tp2.ynov }};
 
         location / {
-            root {{ nginx_webroot }};
+            root {{ /var/www/html }};
             index index.html;
         }
 }
