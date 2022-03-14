@@ -19,3 +19,4 @@ Vagrant.configure("2") do |config|
     config.vm.define "tp3.ynov" do |tp3|
       tp3.vm.network "private_network"
     end
+end
