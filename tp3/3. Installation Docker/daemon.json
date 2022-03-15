@@ -1,0 +1,4 @@
+{
+  "oom-score-adjust": -400,
+  "path": "/etc/docker"
+}
